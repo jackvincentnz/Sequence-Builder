@@ -11,37 +11,37 @@ namespace OutputSequences
 
         static void Main(string[] args)
         {
-            int[] base4 = { 0, 0, 0, 0 };
+            int[] baseCode = { 0, 0, 0, 0 };
 
-            var firstSequence = string.Join("", ToSequence(base4));
+            var firstSequence = string.Join("", ToSequence(baseCode));
             sequences.Add(firstSequence);
 
             while (true)
             {
                 // Incremement least significant digit
                 var currentIndex = 0;
-                base4[currentIndex]++;
+                baseCode[currentIndex]++;
 
                 // While within bounds of sequence and carry over needs to occur
-                while (currentIndex < base4.Length && base4[currentIndex] >= acids.Length)
+                while (currentIndex < baseCode.Length && baseCode[currentIndex] >= acids.Length)
                 {
                     // Set current digit to 0
-                    base4[currentIndex] = 0;
+                    baseCode[currentIndex] = 0;
                     // Move to next digit
                     currentIndex++;
 
                     // If still within bounds of sequence
-                    if (currentIndex < base4.Length)
+                    if (currentIndex < baseCode.Length)
                     {
                         // Incremement this digit
-                        base4[currentIndex]++;
+                        baseCode[currentIndex]++;
                     }
                 }
 
                 // If within bounds of sequence and last increment is allowed
-                if (currentIndex < base4.Length && base4[currentIndex] < acids.Length)
+                if (currentIndex < baseCode.Length && baseCode[currentIndex] < acids.Length)
                 {
-                    var sequence = string.Join("", ToSequence(base4));
+                    var sequence = string.Join("", ToSequence(baseCode));
                     sequences.Add(sequence);
 
                     // continue to next sequence
