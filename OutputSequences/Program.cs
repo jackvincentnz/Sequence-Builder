@@ -22,10 +22,18 @@ namespace OutputSequences
                 {
                     // check if sequence occurs in line.
 
-                    // foreach character in line
-                        // attempt to compare with sequence overlay
+                    // foreach character in line, up until sequence can't fit in remaing line length
+                    for (int i=0; i<=(line.Length-sequence.Key.Length); i++)
+                    {
+                        // check if each sequence char matches the appropriate line char
+                        for (int j=0; j<sequence.Key.Length; j++)
+                        {
+                            var lineChar = line[i+j];
+                            var seqeunceChar = sequence.Key[j];
+                        }
 
                         // if match found increment count
+                    }
                 }
             }
 
