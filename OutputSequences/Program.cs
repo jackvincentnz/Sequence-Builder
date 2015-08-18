@@ -33,7 +33,7 @@ namespace OutputSequences
                         }
 
                         // if match found increment count
-                        sequences[sequence.Key]++;
+                        //sequences[sequence.Key]++;
                     }
                 }
             }
