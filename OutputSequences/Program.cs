@@ -52,6 +52,7 @@ namespace OutputSequences
                 break;
             }
 
+            // Output all of the sequences
             foreach (var sequence in sequences)
             {
                 Console.WriteLine(sequence);
@@ -59,22 +60,22 @@ namespace OutputSequences
             Console.ReadLine();
         }
         
-        private static int[] ToBase4(char[] sequence)
+        private static int[] ToBaseCode(char[] sequence)
         {
-            int[] Base4 = new int[sequence.Length];
+            int[] baseCode = new int[sequence.Length];
             for (var i = 0; i < sequence.Length; i++)
             {
-                Base4[i] = Array.IndexOf(acids, sequence[i]);
+                baseCode[i] = Array.IndexOf(acids, sequence[i]);
             }
-            return Base4;
+            return baseCode;
         }
 
-        private static char[] ToSequence(int[] Base4)
+        private static char[] ToSequence(int[] baseCode)
         {
-            char[] Sequence = new char[Base4.Length];
-            for (var i = 0; i < Base4.Length; i++)
+            char[] Sequence = new char[baseCode.Length];
+            for (var i = 0; i < baseCode.Length; i++)
             {
-                Sequence[i] = acids[Base4[i]];
+                Sequence[i] = acids[baseCode[i]];
             }
             return Sequence;
         }
