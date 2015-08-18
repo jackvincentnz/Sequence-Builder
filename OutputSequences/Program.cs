@@ -22,7 +22,7 @@ namespace OutputSequences
                 {
                     // check if sequence occurs in line.
 
-                    // foreach character in line, up until sequence can't fit in remaing line length
+                    // foreach character in line, up until sequence can't fit in remaining line length
                     for (int i=0; i<=(line.Length-sequence.Key.Length); i++)
                     {
                         // check if each sequence char matches the appropriate line char
@@ -33,6 +33,7 @@ namespace OutputSequences
                         }
 
                         // if match found increment count
+                        sequences[sequence.Key]++;
                     }
                 }
             }
