@@ -29,7 +29,7 @@ namespace OutputSequences
                         for (int j=0; j<sequence.Key.Length; j++)
                         {
                             var lineChar = line[i+j];
-                            var seqeunceChar = sequence.Key[j];
+                            var sequenceChar = sequence.Key[j];
                         }
 
                         // if match found increment count
