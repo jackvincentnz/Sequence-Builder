@@ -5,16 +5,68 @@ namespace OutputSequences
 {
     class Program
     {
-        static readonly int[] lengths = { 3, 6, 9 };
-        static readonly char[] acids = { 'a', 'c', 'g', 'u' };
-        static readonly List<string> sequences = new List<string>();
+        static readonly int[] lengths = { 5 };
+        static readonly char[] acids = { 'a', 'c', 'g', 'u', '?' };
+        static readonly Dictionary<string, int> sequences = new Dictionary<string, int>();
 
         static void Main(string[] args)
         {
-            int[] baseCode = { 0, 0, 0, 0 };
+            GenerateSequenceList();
 
-            var firstSequence = string.Join("", ToSequence(baseCode));
-            sequences.Add(firstSequence);
+            string line;
+            // Read the file and display it line by line.
+            System.IO.StreamReader file = new System.IO.StreamReader("C:\\Users\\Jack\\Projects\\Repos\\Sequence-Builder\\RNAseqs.txt");
+            while ((line = file.ReadLine()) != null)
+            {
+                foreach (var sequence in sequences)
+                {
+                    // check if sequence occurs in line.
+
+                    // foreach character in line
+                        // attempt to compare with sequence overlay
+
+                        // if match found increment count
+                }
+            }
+
+            file.Close();
+
+            // Suspend the screen.
+            Console.ReadLine();
+                        
+            // Output all of the sequences
+            foreach (var sequence in sequences)
+            {
+                Console.WriteLine(sequence);
+            }
+
+            Console.ReadLine();
+        }
+
+        private static void GenerateSequenceList()
+        {
+            // Generate sequences for each length
+            foreach (var length in lengths)
+            {
+                // Initialise first baseCode with 0s for this length
+                int[] baseCode = new int[length];
+                for (int i = 0; i < baseCode.Length; i++)
+                {
+                    baseCode[i] = 0;
+
+                    // Add all sequences to list
+                    GenerateSequences(baseCode);
+                }
+            }
+        }
+
+        private static void GenerateSequences(int[] baseCode)
+        {
+            var firstSequence = ToSequence(baseCode);
+            if (IsValidSequence(firstSequence))
+            {
+                sequences[string.Join("", firstSequence)] = 0;
+            }
 
             while (true)
             {
@@ -41,8 +93,11 @@ namespace OutputSequences
                 // If within bounds of sequence and last increment is allowed
                 if (currentIndex < baseCode.Length && baseCode[currentIndex] < acids.Length)
                 {
-                    var sequence = string.Join("", ToSequence(baseCode));
-                    sequences.Add(sequence);
+                    var sequence = ToSequence(baseCode);
+                    if (IsValidSequence(sequence))
+                    {
+                        sequences[string.Join("", sequence)] = 0;
+                    }
 
                     // continue to next sequence
                     continue;
@@ -51,13 +106,6 @@ namespace OutputSequences
                 // No more sequences
                 break;
             }
-
-            // Output all of the sequences
-            foreach (var sequence in sequences)
-            {
-                Console.WriteLine(sequence);
-            }
-            Console.ReadLine();
         }
         
         private static int[] ToBaseCode(char[] sequence)
@@ -78,6 +126,33 @@ namespace OutputSequences
                 Sequence[i] = acids[baseCode[i]];
             }
             return Sequence;
+        }
+
+        private static bool IsValidSequence(char[] sequence)
+        {
+            return sequence[0] != '?' && sequence[sequence.Length-1] != '?';
+        }
+
+        private static string PatternType(char[] sequence)
+        {
+            foreach (var character in sequence)
+            {
+                if (character == '?')
+                {
+                    return "Variable";
+                }
+            }
+            return "Fixed";
+        }
+
+        private static bool IsFixed(char[] sequence)
+        {
+            return PatternType(sequence) == "Fixed";
+        }
+
+        private static bool IsVariable(char[] sequence)
+        {
+            return PatternType(sequence) == "Variable";
         }
     }
 }
