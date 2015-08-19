@@ -5,7 +5,7 @@ namespace OutputSequences
 {
     class Program
     {
-        static readonly int[] lengths = { 5 };
+        static readonly int[] lengths = { 1, 2, 3 };
         static readonly char[] acids = { 'a', 'c', 'g', 'u', '?' };
         static readonly Dictionary<string, int> sequences = new Dictionary<string, int>();
 
@@ -39,9 +39,6 @@ namespace OutputSequences
             }
 
             file.Close();
-
-            // Suspend the screen.
-            Console.ReadLine();
                         
             // Output all of the sequences
             foreach (var sequence in sequences)
@@ -49,6 +46,7 @@ namespace OutputSequences
                 Console.WriteLine(sequence);
             }
 
+            // Keep console open
             Console.ReadLine();
         }
 
