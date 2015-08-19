@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OutputSequences
 {
     class Program
     {
         static readonly int[] lengths = { 1, 2, 3 };
-        static readonly char[] acids = { 'a', 'c', 'g', 'u', '?' };
+        static readonly char[] acids = { 'A', 'C', 'G', 'U', '?' };
         static readonly Dictionary<string, int> sequences = new Dictionary<string, int>();
 
         static void Main(string[] args)
@@ -15,25 +16,49 @@ namespace OutputSequences
 
             string line;
             // Read the file and display it line by line.
-            System.IO.StreamReader file = new System.IO.StreamReader("C:\\Users\\Jack\\Projects\\Repos\\Sequence-Builder\\RNAseqs.txt");
+            System.IO.StreamReader file = new System.IO.StreamReader("D:\\Documents\\Personal\\Sequence-Builder\\RNAseqs.txt");
             while ((line = file.ReadLine()) != null)
             {
-                foreach (var sequence in sequences)
+                // For every sequence
+                for (int s=0; s<sequences.Count; s++)
                 {
-                    // check if sequence occurs in line.
+                    // Get dictionary entry
+                    var sequence = sequences.ElementAt(s);
 
+                    // Check if sequence appears at least once in the line
                     // foreach character in line, up until sequence can't fit in remaining line length
-                    for (int i=0; i<=(line.Length-sequence.Key.Length); i++)
+                    for (int i = 0; i <= (line.Length - sequence.Key.Length); i++)
                     {
+                        var matched = false;
+
                         // check if each sequence char matches the appropriate line char
                         for (int j=0; j<sequence.Key.Length; j++)
                         {
                             var lineChar = line[i+j];
                             var sequenceChar = sequence.Key[j];
+
+                            // if the the current sequenceChar doesn't have a wildcard or match the lineChar,
+                            // stop checking at this location in the line
+                            if (sequenceChar != '?' && sequenceChar != lineChar)
+                            {
+                                break;
+                            }
+
+                            // if we got here and there are no more chars to check in the sequence we have a match!
+                            if (j == (sequence.Key.Length - 1))
+                            {
+                                matched = true;
+                            }
                         }
 
-                        // if match found increment count
-                        //sequences[sequence.Key]++;
+                        if (matched)
+                        {
+                            // increment count for this sequence
+                            sequences[sequence.Key]++;
+
+                            // stop looking for a match on this line
+                            break;
+                        }
                     }
                 }
             }
